@@ -18,3 +18,24 @@ def crawl(url):
             printTweet(driver)
     finally:
         driver.close()
+import sys
+sys.setdefaultencoding( "utf-8" )
+
+from PIL import Image
+import numpy as np
+
+from wordcloud import WordCloud, ImageColorGenerator
+import sys
+sys.setdefaultencoding( "utf-8" )
+
+from PIL import Image
+import numpy as np
+
+from wordcloud import WordCloud, ImageColorGenerator
+import sys
+sys.setdefaultencoding( "utf-8" )
+
+from PIL import Image
+import numpy as np
+
+from wordcloud import WordCloud, ImageColorGenerator

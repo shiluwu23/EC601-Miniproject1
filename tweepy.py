@@ -1,41 +1,30 @@
-# Get the User object for twitter...
-def crawl(url):
-    chromedriverPath = "你的本地driver地址"
-    # twitter每次更新13条
-    eachCount = 13
-    # 滚动几次。滚动次数越多，采集的数据越多
-    scrollTimes = 100
-    # driver = webdriver.Firefox()
-    driver = webdriver.Chrome(chromedriverPath)
-    driver.get(url)
-    try:
-        for i in range(scrollTimes):
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+import tweepy
+from tweepy import OAuthHandler
+import json
+import os
 
-            lastTweetCss = "#stream-items-id >li:nth-of-type(" + str(eachCount * (i + 2) + 1) + ") .tweet-text"
-            print lastTweetCss
-            elem = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, lastTweetCss)))
-            printTweet(driver)
-    finally:
-        driver.close()
-import sys
-sys.setdefaultencoding( "utf-8" )
+consumer_key = 'Dg0ZvE3Ygu0sI9gQXBSCrPEdA'
+consumer_secret = 'j17lBGBXtvUStt8kaCWBD0hbvUfndiey023v3lApTPq3nRaB4A'
+access_token = '1040342641249013760-qSLxHrQjoff84GZOOjHgcNMlOgedzC'
+access_secret = 'BhxGNaAfOfOhooT16UpB7nXmkuuVILt37KVeGi828PDp7'
 
-from PIL import Image
-import numpy as np
 
-from wordcloud import WordCloud, ImageColorGenerator
-import sys
-sys.setdefaultencoding( "utf-8" )
+auth = OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_secret)
 
-from PIL import Image
-import numpy as np
+api = tweepy.API(auth)
+tweets = api.user_timeline(screen_name='KrisWu',
+                           count=200, include_rts=False,
+                           exclude_replies=True)
+media_files = set()
+for status in tweets:
+    media = status.entities.get('media', [])
+    if(len(media) > 0):
+        media_files.add(media[0]['media_url'])
 
-from wordcloud import WordCloud, ImageColorGenerator
-import sys
-sys.setdefaultencoding( "utf-8" )
+import wget
 
-from PIL import Image
-import numpy as np
+for media_file in media_files:
+        wget.download(media_file)
 
-from wordcloud import WordCloud, ImageColorGenerator
+os.popen('ffmpeg -r 0.5 -i img%03d.jpg -vf scale=500:500 -y -r 30 -t 60 out.mp4')

@@ -4,9 +4,9 @@ import json
 import os
 
 consumer_key = ''
-consumer_secret = 'B4A'
-access_token = 'C'
-access_secret = 'B'
+consumer_secret = ''
+access_token = ''
+access_secret = ''
 
 
 auth = OAuthHandler(consumer_key, consumer_secret)

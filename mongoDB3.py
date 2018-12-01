@@ -2,8 +2,6 @@ import pymongo
 import datetime
 from time import time,localtime,asctime
 
-
-
 def mongoDb(twnum,picnum,picaddress,newtag):
         #Connect to mongoDB
         client = pymongo.MongoClient(host='localhost', port=27017)

@@ -10,10 +10,10 @@ from google.cloud import vision
 from PIL import Image,ImageFont,ImageDraw
 
 def twi():
-    consumer_key = 'Dg0ZvE3Ygu0sI9gQXBSCrPEdA'
-    consumer_secret = 'j17lBGBXtvUStt8kaCWBD0hbvUfndiey023v3lApTPq3nRaB4A'
-    access_token = '1040342641249013760-OKil3G5vfXaue7GkEhckuJ2nZqmWCI'
-    access_secret = '5KOk0hKxK5Pj2lSTBdxwayqI8QwlcGhMHfN6IuZvlvqWR'
+    consumer_key = ''
+    consumer_secret = ''
+    access_token = '-'
+    access_secret = ''
 
     #authorize twitter, initialize tweepy
     auth = OAuthHandler(consumer_key, consumer_secret)

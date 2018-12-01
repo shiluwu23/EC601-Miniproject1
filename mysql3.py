@@ -8,7 +8,7 @@ import datetime
 # Write information into the mini3_database database.
 def mysql(twnum,picnum,picaddress,newtag):
     # 打开数据库连接Connect to the database.
-    dbb = pymysql.connect(host = "localhost", user = "root", passwd = "FORever23mm!", db ="ec601mini3")
+    dbb = pymysql.connect(host = "localhost", user = "root", passwd = "!", db ="ec601mini3")
     # 使用cursor()方法获取操作游标
     cursor = dbb.cursor()
     times = datetime.datetime.now()
@@ -26,23 +26,17 @@ def mysql(twnum,picnum,picaddress,newtag):
        print('Data inserted successfully!')
     except:
        # Rollback in case there is any error
-       # 发生错误时回滚
        dbb.rollback()
        print("Can't connect to mysql database!")
-
-    # 关闭数据库连接
     dbb.close()
 
 # Create table
 def create():
-    dbb = pymysql.connect(host = "localhost", user = "root", passwd = "FORever23mm!", db ="ec601mini3")
-    # 使用cursor()方法获取操作游标
+    dbb = pymysql.connect(host = "localhost", user = "root", passwd = "!", db ="ec601mini3")
     cursor = dbb.cursor()
-
-    # 如果数据表已经存在使用 execute() 方法删除表。
     cursor.execute("DROP TABLE IF EXISTS mini3_database")
 
-    # 创建数据表SQL语句
+    # Create table
     sql = """CREATE TABLE mini3_database (
              username CHAR(45) NOT NULL,
              twtnum INT NOT NULL,

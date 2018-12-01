@@ -15,3 +15,13 @@ Use the following code to create database and table, then insert information int
              picaddress CHAR(100) NOT NULL,
              tags CHAR(200) NOT NULL)"""
     print('Table created successfully!')
+    
+# Create MongoDB database
+Connect to mongoDB:
+        client = pymongo.MongoClient(host='localhost', port=27017)
+        # Specify a database.
+        db = client.ec601mini3
+        # Specify a collection.
+        collection = db.mini3_database
+        # INsert information into collection.
+        mini3_database = {"time":asctime(localtime(time())),"twtnum":twnum,"picnum":picnum,"picaddress":picaddress,"tags":newtag}

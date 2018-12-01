@@ -18,6 +18,7 @@ Use the following code to create database and table, then insert information int
     
 # Create MongoDB database
 Connect to mongoDB:
+
         client = pymongo.MongoClient(host='localhost', port=27017)
         # Specify a database.
         db = client.ec601mini3

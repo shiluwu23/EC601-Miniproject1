@@ -61,7 +61,5 @@ for i in range(num):
     draw.text((x,y), str,)
     im.save(file_name)
     print(str)
-
-
-
+# Generate  video.
 os.popen('ffmpeg -r 0.5 -i img%03d.jpg -vf scale=500:500 -y -r 30 -t 60 out.mp4')

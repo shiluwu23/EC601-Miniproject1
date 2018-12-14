@@ -2,32 +2,40 @@ import pymongo
 import datetime
 from time import time,localtime,asctime
 
+def clear_base():
+    client = pymongo.MongoClient(host='localhost', port=27017)
+    db = client.ec601mini3
+    collection = db.mini3_database
+    collection.drop()
+
+
 def mongoDb(twnum,picnum,picaddress,newtag):
         #Connect to mongoDB
         client = pymongo.MongoClient(host='localhost', port=27017)
+
         # Specify a database.
         db = client.ec601mini3
+
         # Specify a collection.
+        #
         collection = db.mini3_database
         # INsert information into collection.
         mini3_database = {"time":asctime(localtime(time())),"twtnum":twnum,"picnum":picnum,"picaddress":picaddress,"tags":newtag}
         times = datetime.datetime.now()
-        print(times)
+        #print(times)
 
         result = collection.insert(mini3_database)
-        print(type(result))
-        print(result)
+        #print(type(result))
+        #print(result)
 
         results = collection.find({'tags': newtag})
         result = []
         for user in results:
             result.append(user['tags'])
-
+        
         return result
-        print(result)
 
 def search_keyword(keyword):
-        word = input("Enter a word to search: ")
         client = pymongo.MongoClient(host='localhost', port=27017)
         db = client.ec601mini3
         collection = db.mini3_database
@@ -49,11 +57,25 @@ def most_popular():
     db = client.ec601mini3
 # Specify a collection.
     collection = db.mini3_database
-    c = collection.aggregate([{"$group":{"_id":"$Descriptor","Frequency":{"$sum":1}}}])
-    print(list(c)[0])
+    c = collection.find()
+    dic={}
+    for i in c:
+    	if i['tags'] in dic:
+    		dic[i['tags']] +=1
+    	else:
+    		dic[i['tags']] =1
+    ans = max(dic.items(), key=lambda x: x[1])
+    return ans
+
 
 if __name__ == '__main__':
-    mongoDb("twnum","picnum","picaddress","newtag")
-    search_keyword('keyword')
-    num_perfeed()
-    most_popular()
+    clear_base()
+    mongoDb("1","picnum1","picaddressA","newtag")
+    mongoDb("2","picnum2","picaddressB","newtag2")
+    mongoDb("3","picnum3","picaddressC","newtag2")
+    mongoDb("4","picnum4","picaddressD","newtag2")
+    mongoDb("5","picnum5","picaddressE","newtag3")
+    mongoDb("6","picnum6","picaddressF","newtag3")
+    mongoDb("7","picnum7","picaddressG","newtag4")
+    search_keyword('newtag')
+    print(most_popular())

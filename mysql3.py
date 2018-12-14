@@ -7,21 +7,16 @@ import datetime
 
 # Write information into the mini3_database database.
 def mysql(twnum,picnum,picaddress,newtag):
-    # 打开数据库连接Connect to the database.
     dbb = pymysql.connect(host = "localhost", user = "root", passwd = "", db ="ec601mini3")
-    # 使用cursor()方法获取操作游标
     cursor = dbb.cursor()
     times = datetime.datetime.now()
     print(times)
-    # SQL 插入语句 Insert
     sql = "INSERT INTO mini3_database(username, \
            twtnum,picnum,timei, picaddress, tags) \
            VALUES ('%s', %s, %s, '%s', '%s','%s')" % \
           ('Username', twnum, picnum, times, picaddress,newtag)
     try:
-       # 执行sql语句
        cursor.execute(sql)
-       # 提交到数据库执行
        dbb.commit()
        print('Data inserted successfully!')
     except:

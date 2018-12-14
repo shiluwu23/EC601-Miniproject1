@@ -5,14 +5,14 @@ import os
 import io
 import urllib.request
 import mysql3
-import pymongo
+import mongoDB3
 from google.cloud import vision
 from PIL import Image,ImageFont,ImageDraw
 
 def twi():
     consumer_key = ''
     consumer_secret = ''
-    access_token = '-'
+    access_token = ''
     access_secret = ''
 
     #authorize twitter, initialize tweepy
@@ -26,12 +26,12 @@ def twi():
     media_files = set()
     for status in tweets:
         media = status.entities.get('media', [])
-        if(len(media) > 0): #1
+        if(len(media) > 0): 
             media_files.add(media[0]['media_url'])
 
     num=0
     for media_file in media_files:
-        save_name = 'img%03d.jpg'%num #2
+        save_name = 'img%03d.jpg'%num 
         urllib.request.urlretrieve(media_file,save_name)
         num = num + 1
 
@@ -39,6 +39,7 @@ def twi():
     client = vision.ImageAnnotatorClient()
 
     mysql3.create()
+    mongoDB3.clear_base()
     for i in range(num):
         file_name = os.path.join(
             os.path.dirname(__file__),
@@ -59,7 +60,7 @@ def twi():
         for label in labels:
             str = str + label.description + '\n' #tag
             newtag = newtag + label.description + ','
-        #print(newtag)
+        print(newtag)
 
         im = Image.open(file_name)
 
@@ -75,6 +76,7 @@ def twi():
         fl = ''
         fl = fl + file_name
         mysql3.mysql(count,num,fl,newtag)
+        mongoDB3.mongoDb(count,num,fl,newtag)
 
 
 
